@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "d3": "^5.14.2"
+    "d3": "^5.14.2",
+    "geojson": "^0.5.0",
+    "topojson": "^3.0.2",
+    "world-atlas": "^2.0.2"
   }
 }
