@@ -1,73 +1,72 @@
-var width = 1000,
-  height = 800,
-  sens = 0.25,
-  focused;
+let width = 1000;
+let height = 900;
+let sens = 0.25;
+let focused;
 
-//Setting projection
-
-var projection = d3.geo
+let globeProj = d3.geo
   .orthographic()
-  .scale(245)
-  .rotate([0, 0])
+  .scale(350)
+  // .rotate([0, 0])
   .translate([width / 2, height / 2])
   .clipAngle(90);
 
-var path = d3.geo.path().projection(projection);
+let path = d3.geo.path().projection(globeProj);
 
-//SVG container
+//globe
 
-var svg = d3
-  .select("body")
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height);
+let svg = d3
+  .select('body')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', height);
 
-//Adding water
 
 svg
-  .append("path")
-  .datum({ type: "Sphere" })
-  .attr("class", "water")
-  .attr("d", path);
+  .append('path')
+  .datum({ type: 'Sphere' })
+  .attr('class', 'globe')
+  .attr('d', path);
 
-var countryTooltip = d3
-    .select("body")
-    .append("div")
-    .attr("class", "countryTooltip"),
-  countryList = d3
-    .select("body")
-    .append("select")
-    .attr("name", "countries");
+let countrySearch = d3
+    .select('body')
+    .append('div')
+    .attr('class', 'countrySearch')
+
+let countryList = d3
+    .select('body')
+    .append('select')
+    .attr('name', 'countries');
 
 queue()
-  .defer(d3.json, "/d/5685937/world-110m.json")
-  .defer(d3.tsv, "/d/5685937/world-110m-country-names.tsv")
+  .defer(d3.json, 'world-110m.json')
+  .defer(d3.tsv, 'world-country-names.tsv')
   .await(ready);
 
 //Main function
 
 function ready(error, world, countryData) {
-  var countryById = {},
+  let countryById = {},
     countries = topojson.feature(world, world.objects.countries).features;
 
   //Adding countries to select
 
-  countryData.forEach(function(d) {
-    countryById[d.id] = d.name;
-    option = countryList.append("option");
-    option.text(d.name);
-    option.property("value", d.id);
+  countryData.forEach(function(c) {
+    countryById[c.id] = c.name;
+    option = countryList.append('option');
+    option.text(c.name);
+    option.property('value', c.id);
   });
 
   //Drawing countries on the globe
 
   var world = svg
-    .selectAll("path.land")
+    .selectAll('path.land')
     .data(countries)
     .enter()
-    .append("path")
-    .attr("class", "land")
+    .append('path')
+    .attr('class', 'land')
     .attr("d", path)
+    
 
     //Drag event
 
@@ -75,40 +74,48 @@ function ready(error, world, countryData) {
       d3.behavior
         .drag()
         .origin(function() {
-          var r = projection.rotate();
+          let r = globeProj.rotate();
           return { x: r[0] / sens, y: -r[1] / sens };
         })
         .on("drag", function() {
-          var rotate = projection.rotate();
-          projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
+          let rotate = globeProj.rotate();
+          globeProj.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
           svg.selectAll("path.land").attr("d", path);
-          svg.selectAll(".focused").classed("focused", (focused = false));
+          // svg.selectAll("path.globe").attr("d", path);
+          svg.selectAll(".focused") // .classed("focused", (focused = false));
         })
     )
 
     //Mouse events
 
     .on("mouseover", function(d) {
-      countryTooltip
+      countrySearch
         .text(countryById[d.id])
         .style("left", d3.event.pageX + 7 + "px")
         .style("top", d3.event.pageY - 15 + "px")
-        .style("display", "block")
-        .style("opacity", 1);
+        .style("display", "block")       
     })
+
+    // .on('mouseover', function(d) {
+    //   svg.selectAll('path.land')
+    //     .scale(1.5, 1.5)
+    // })
+
     .on("mouseout", function(d) {
-      countryTooltip.style("opacity", 0).style("display", "none");
+      countrySearch.style("opacity", 0).style("display", "none");
     })
+
     .on("mousemove", function(d) {
-      countryTooltip
+      countrySearch
         .style("left", d3.event.pageX + 7 + "px")
-        .style("top", d3.event.pageY - 15 + "px");
-    });
+        .style("top", d3.event.pageY - 15 + "px")
+    })
+
 
   //Country focus on option select
 
   d3.select("select").on("change", function() {
-    var rotate = projection.rotate(),
+    var rotate = globeProj.rotate(),
       focusedCountry = country(countries, this),
       p = d3.geo.centroid(focusedCountry);
 
@@ -120,9 +127,9 @@ function ready(error, world, countryData) {
       d3.transition()
         .duration(2500)
         .tween("rotate", function() {
-          var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+          var r = d3.interpolate(globeProj.rotate(), [-p[0], -p[1]]);
           return function(t) {
-            projection.rotate(r(t));
+            globeProj.rotate(r(t));
             svg
               .selectAll("path")
               .attr("d", path)

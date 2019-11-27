@@ -1,37 +1,64 @@
-.water {
-  fill: #00248F;
+html {
+  background-color: lightgoldenrodyellow;
+}
+
+.globe {
+  fill: lightblue;
 }
 
 .land {
-  fill: #A98B6F;
+  fill: peachpuff;
   stroke: #FFF;
   stroke-width: 0.7px;
 }
+.land:nth-child(2n) {
+  fill: rgb(6, 70, 95);
+}
+
+.land:nth-child(3n) {
+  fill: rgb(199, 199, 129);
+}
+
+.land:nth-child(4n) {
+  fill: rgb(190, 150, 202);
+}
+
+.land:nth-child(5n) {
+  fill: lightpink;
+}
+
+.land:nth-child(7n) {
+  fill: rgb(180, 125, 125);
+}
+
+
+
+
 
 .land:hover {
-  fill:#33CC33;
+  fill: lightsalmon;
   stroke-width: 1px;
 }
 
 .focused {
-  fill: #33CC33;
+  fill: rgb(51, 97, 204);
 }
 
-select {
+/* select {
   position: absolute;
   top: 20px;
   left: 580px;
   border: solid #ccc 1px;
   padding: 3px;
   box-shadow: inset 1px 1px 2px #ddd8dc;
-}
+} */
 
-.countryTooltip {
+.countrySearch {
   position: absolute;
   display: none;
   pointer-events: none;
   background: #fff;
-  padding: 5px;
+  padding: 1px;
   text-align: left;
   border: solid #ccc 1px;
   color: #666;
