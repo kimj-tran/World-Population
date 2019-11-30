@@ -43,6 +43,10 @@ html {
   fill: rgb(69, 97, 97);
 }
 
+.land:nth-child(10n) {
+  fill: rgb(92, 170, 103);
+}
+
 
 .land:hover {
   fill: lightsalmon;
