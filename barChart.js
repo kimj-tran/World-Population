@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { select, csv, scaleLinear, max, scaleBand } from "d3";
 
 const height = 800;
 const width = 1200;
@@ -10,7 +11,7 @@ const svg = d3.select('body')
     .style('background-color', 'lightblue')
 
 const render = data => {
-    const xScale = scaleLiner()
+    const xScale = scaleLinear()
         .domain(([0, max(data, d => d.population)]))
         .range([0, width])
 
