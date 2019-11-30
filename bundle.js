@@ -111,13 +111,21 @@ var render = function render(data) {
   var yScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleBand"])().domain(data.map(function (d) {
     return d.country;
   })) //   .domain([0, max(data, d => d.population)])
-  .range([0, height]); // length of all country
+  .range([0, height]);
+  var yAxis = Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisLeft"])(yScale); // length of all country
 
-  svg.selectAll("rect").data(data).enter().append("rect").attr("y", function (d) {
+  var margin = {
+    top: 30,
+    right: 30,
+    left: 100,
+    bottom: 20
+  };
+  var g = svg.append('g').attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")"));
+  g.selectAll('rect').data(data).enter().append('rect').attr('y', function (d) {
     return yScale(d.country);
-  }).attr("width", function (d) {
+  }).attr('width', function (d) {
     return xScale(d.population);
-  }).attr("height", yScale.bandwidth()).style("fill", "blue");
+  }).attr('height', yScale.bandwidth()).style('fill', 'blue');
 };
 
 d3__WEBPACK_IMPORTED_MODULE_0__["csv"]("world.csv").then(function (data) {

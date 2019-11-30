@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { select, csv, scaleLinear, max, scaleBand } from "d3";
+import {scaleLinear, max, scaleBand, axisLeft } from "d3";
 
 const height = 800;
 const width = 1200;
@@ -16,23 +16,29 @@ const render = data => {
       .domain([0, max(data, d => d.population)])
       .range([0, width]);
 
-        // max number of population
-
-    const yScale = scaleBand()
+      
+      // max number of population
+      
+      const yScale = scaleBand()
       .domain(data.map(d => d.country))
-    //   .domain([0, max(data, d => d.population)])
+      //   .domain([0, max(data, d => d.population)])
       .range([0, height]);
-
+      
+    const yAxis = axisLeft(yScale);
         // length of all country
-    svg
-      .selectAll("rect")
+    const margin = { top: 30, right: 30, left: 100, bottom: 20}
+
+    const g = svg.append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    g
+      .selectAll('rect')
       .data(data)
       .enter()
-      .append("rect")
-      .attr("y", d => yScale(d.country))
-      .attr("width", d => xScale(d.population))
-      .attr("height", yScale.bandwidth())
-      .style("fill", "blue");
+      .append('rect')
+      .attr('y', d => yScale(d.country))
+      .attr('width', d => xScale(d.population))
+      .attr('height', yScale.bandwidth())
+      .style('fill', 'blue');
 };
 
 d3.csv("world.csv").then(data => {
