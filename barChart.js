@@ -30,4 +30,11 @@ const render = data => {
       .attr("width", d => xScale(d.population))
       .attr("height", yScale.bandwidth())
       .style("fill", "blue");
-}
+};
+
+d3.csv("world.csv").then(data => {
+  data.forEach(c => {
+    c.population = +c.population;
+  });
+  render(data);
+});
