@@ -27,6 +27,10 @@ svg
   .attr('class', 'globe')
   .attr('d', path);
 
+land
+  .append('path.land')
+  .data
+
 let countrySearch = d3
     .select('body')
     .append('div')
