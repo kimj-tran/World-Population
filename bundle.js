@@ -103,13 +103,15 @@ var width = 1200;
 var svg = d3__WEBPACK_IMPORTED_MODULE_0__["select"]('body').append('svg').attr('width', width).attr('height', height).style('background-color', 'lightblue');
 
 var render = function render(data) {
-  var xScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleLinear"])().domain([0, Object(d3__WEBPACK_IMPORTED_MODULE_0__["max"])(data, function (d) {
+  var xScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleLinear"])() //   .domain(data.map(d => d.country))
+  .domain([0, Object(d3__WEBPACK_IMPORTED_MODULE_0__["max"])(data, function (d) {
     return d.population;
   })]).range([0, width]); // max number of population
 
   var yScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleBand"])().domain(data.map(function (d) {
     return d.country;
-  })).range([0, height]); // length of all country
+  })) //   .domain([0, max(data, d => d.population)])
+  .range([0, height]); // length of all country
 
   svg.selectAll("rect").data(data).enter().append("rect").attr("y", function (d) {
     return yScale(d.country);

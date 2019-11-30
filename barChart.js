@@ -12,14 +12,16 @@ const svg = d3.select('body')
 
 const render = data => {
     const xScale = scaleLinear()
-        .domain(([0, max(data, d => d.population)]))
-        .range([0, width])
+    //   .domain(data.map(d => d.country))
+      .domain([0, max(data, d => d.population)])
+      .range([0, width]);
 
         // max number of population
 
     const yScale = scaleBand()
-        .domain(data.map(d => d.country))
-        .range([0, height])
+      .domain(data.map(d => d.country))
+    //   .domain([0, max(data, d => d.population)])
+      .range([0, height]);
 
         // length of all country
     svg
