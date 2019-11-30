@@ -2,6 +2,10 @@ html {
   background-color: lightgoldenrodyellow;
 }
 
+text {
+  font-size: 1.3em;
+}
+
 .globe {
   fill: lightblue;
 }

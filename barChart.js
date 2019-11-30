@@ -6,7 +6,7 @@ import {scaleLinear,
         axisBottom,
      } from "d3";
 
-const height = 3900;
+const height = 4600;
 const width = 1400;
 
 const svg = d3.select('body')
@@ -27,12 +27,13 @@ const render = data => {
       const yScale = scaleBand()
       .domain(data.map(d => d.country))
       //   .domain([0, max(data, d => d.population)])
-      .range([0, height]);
+      .range([0, height])
+      .padding(0.3);
       
     const yAxis = axisLeft(yScale);
     const xAxis = axisBottom(xScale);
         // length of all country
-    const margin = { top: 30, right: 30, left: 100, bottom: 20}
+    const margin = { top: 30, right: 30, left: 150, bottom: 18}
 
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
@@ -52,7 +53,7 @@ const render = data => {
       .attr('y', d => yScale(d.country))
       .attr('width', d => xScale(d.population))
       .attr('height', yScale.bandwidth())
-      .style('fill', 'blue')
+      .style('fill', 'steelblue')
       .style('stroke', 'black')
       .style('stroke-width', 0.7)
 };
