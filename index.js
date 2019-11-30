@@ -5,16 +5,16 @@ let focused;
 
 let globeProj = d3.geo
   .orthographic()
-  .scale(350)
-  // .rotate([0, 0])
+  .rotate([0, 0])
   .translate([width / 2, height / 2])
-  .clipAngle(90);
+  .clipAngle(90)
+  .scale(350)
 
 let path = d3.geo.path().projection(globeProj);
 
 //globe
 
-let svg = d3
+svg = d3
   .select('body')
   .append('svg')
   .attr('width', width)
@@ -42,7 +42,6 @@ queue()
   .defer(d3.tsv, 'world-country-names.tsv')
   .await(ready);
 
-//Main function
 
 function ready(error, world, countryData) {
   let countryById = {},
@@ -81,8 +80,7 @@ function ready(error, world, countryData) {
           let rotate = globeProj.rotate();
           globeProj.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
           svg.selectAll("path.land").attr("d", path);
-          // svg.selectAll("path.globe").attr("d", path);
-          svg.selectAll(".focused") // .classed("focused", (focused = false));
+          svg.selectAll(".focused").classed("focused", (focused = false));
         })
     )
 
@@ -93,24 +91,17 @@ function ready(error, world, countryData) {
         .text(countryById[d.id])
         .style("left", d3.event.pageX + 7 + "px")
         .style("top", d3.event.pageY - 15 + "px")
-        .style("display", "block")       
+        .style("display", "block")
+        .style("opacity", 1);
     })
-
-    // .on('mouseover', function(d) {
-    //   svg.selectAll('path.land')
-    //     .scale(1.5, 1.5)
-    // })
-
     .on("mouseout", function(d) {
       countrySearch.style("opacity", 0).style("display", "none");
     })
-
     .on("mousemove", function(d) {
       countrySearch
         .style("left", d3.event.pageX + 7 + "px")
         .style("top", d3.event.pageY - 15 + "px")
-    })
-
+    });
 
   //Country focus on option select
 

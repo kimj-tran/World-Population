@@ -27,12 +27,21 @@ html {
   fill: lightpink;
 }
 
+.land:nth-child(6n) {
+  fill: teal;
+}
+
 .land:nth-child(7n) {
   fill: rgb(180, 125, 125);
 }
 
+.land:nth-child(8n) {
+  fill: rgb(146, 114, 168);
+}
 
-
+.land:nth-child(9n) {
+  fill: rgb(69, 97, 97);
+}
 
 
 .land:hover {
@@ -41,17 +50,17 @@ html {
 }
 
 .focused {
-  fill: rgb(51, 97, 204);
+  fill:red;
 }
 
-/* select {
+ select {
   position: absolute;
   top: 20px;
   left: 580px;
   border: solid #ccc 1px;
   padding: 3px;
   box-shadow: inset 1px 1px 2px #ddd8dc;
-} */
+}
 
 .countrySearch {
   position: absolute;
