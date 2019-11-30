@@ -1,8 +1,13 @@
 import * as d3 from 'd3';
-import {scaleLinear, max, scaleBand, axisLeft } from "d3";
+import {scaleLinear, 
+        max, 
+        scaleBand, 
+        axisLeft,
+        axisBottom,
+     } from "d3";
 
-const height = 800;
-const width = 1200;
+const height = 3900;
+const width = 1400;
 
 const svg = d3.select('body')
     .append('svg')
@@ -25,11 +30,20 @@ const render = data => {
       .range([0, height]);
       
     const yAxis = axisLeft(yScale);
+    const xAxis = axisBottom(xScale);
         // length of all country
     const margin = { top: 30, right: 30, left: 100, bottom: 20}
 
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    
+    const inner = height - margin.top - margin.bottom;
+
+    yAxis(g.append('g'));
+    xAxis(g.append('g')
+        .attr('transform', `translate(0, ${inner})`))
+    
+
     g
       .selectAll('rect')
       .data(data)
@@ -38,12 +52,14 @@ const render = data => {
       .attr('y', d => yScale(d.country))
       .attr('width', d => xScale(d.population))
       .attr('height', yScale.bandwidth())
-      .style('fill', 'blue');
+      .style('fill', 'blue')
+      .style('stroke', 'black')
+      .style('stroke-width', 0.7)
 };
 
 d3.csv("world.csv").then(data => {
   data.forEach(c => {
-    c.population = +c.population;
+    c.population = +c.population * 100;
   });
   render(data);
 });
