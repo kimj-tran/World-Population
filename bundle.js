@@ -99,15 +99,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var topojson__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! topojson */ "./node_modules/topojson/index.js");
 
 
-var svg = d3__WEBPACK_IMPORTED_MODULE_0__["select"]("body").append("svg").attr("width", 1000).attr("height", 700).style("background-color", "steelblue");
-var projection = d3__WEBPACK_IMPORTED_MODULE_0__["geoMercator"]();
+var svg = d3__WEBPACK_IMPORTED_MODULE_0__["select"]("body").append("svg").attr("width", 1200).attr("height", 900);
+var projection = d3__WEBPACK_IMPORTED_MODULE_0__["geoOrthographic"]();
 var pathStartor = d3__WEBPACK_IMPORTED_MODULE_0__["geoPath"]().projection(projection);
+svg.append('path').attr('d', pathStartor({
+  type: 'Sphere'
+})).attr('class', 'globe');
+Promise.all([d3__WEBPACK_IMPORTED_MODULE_0__["tsv"]("world-country-names.tsv"), d3__WEBPACK_IMPORTED_MODULE_0__["json"]("world-110m.json"), d3__WEBPACK_IMPORTED_MODULE_0__["csv"]("world.csv")]).then(function (data) {
+  return console.log(data);
+});
 d3__WEBPACK_IMPORTED_MODULE_0__["json"]("world-110m.json").then(function (data) {
   var countries = topojson__WEBPACK_IMPORTED_MODULE_1__["feature"](data, data.objects.countries);
-  var path = svg.selectAll('path').data(countries.features);
-  path.enter().append('path').attr('d', function (d) {
+  var path = svg.selectAll('path').data(countries.features).enter().append('path').attr('d', function (d) {
     return pathStartor(d);
-  });
+  }).attr('class', 'land');
+  path.append('title').text('hello');
 });
 
 /***/ }),

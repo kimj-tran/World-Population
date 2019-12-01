@@ -1,0 +1,21 @@
+body {
+    background-color: gray;
+}
+
+.globe {
+    fill: lightblue;
+    width: 1000px;
+    height: 900px;
+}
+
+
+.land {
+    fill: pink;
+    stroke: black;
+    stroke-opacity: 0.6;
+    stroke-width: 1px;
+}
+
+svg {
+    padding: 10%;
+}
