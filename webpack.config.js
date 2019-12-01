@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   // tell webpack where entry point file lives
-  entry: "./barChart.js", //this is assuming that we have a frontend folder that has the entry file
+  entry: "./index.js", //this is assuming that we have a frontend folder that has the entry file
 
   // tell webpack where to output bundled js file
   output: {

@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./barChart.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./barChart.js":
-/*!*********************!*\
-  !*** ./barChart.js ***!
-  \*********************/
+/***/ "./index.js":
+/*!******************!*\
+  !*** ./index.js ***!
+  \******************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -97,47 +97,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
 
-
-var height = 4600;
-var width = 1400;
-var svg = d3__WEBPACK_IMPORTED_MODULE_0__["select"]('body').append('svg').attr('width', width).attr('height', height).style('background-color', 'lightblue');
-
-var render = function render(data) {
-  var xScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleLinear"])() //   .domain(data.map(d => d.country))
-  .domain([0, Object(d3__WEBPACK_IMPORTED_MODULE_0__["max"])(data, function (d) {
-    return d.population;
-  })]).range([0, width]); // max number of population
-
-  var yScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleBand"])().domain(data.map(function (d) {
-    return d.country;
-  })) //   .domain([0, max(data, d => d.population)])
-  .range([0, height]).padding(0.3);
-  var yAxis = Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisLeft"])(yScale);
-  var xAxis = Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisBottom"])(xScale); // length of all country
-
-  var margin = {
-    top: 30,
-    right: 30,
-    left: 150,
-    bottom: 18
-  };
-  var g = svg.append('g').attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")"));
-  var inner = height - margin.top - margin.bottom;
-  yAxis(g.append('g'));
-  xAxis(g.append('g').attr('transform', "translate(0, ".concat(inner, ")")));
-  g.selectAll('rect').data(data).enter().append('rect').attr('y', function (d) {
-    return yScale(d.country);
-  }).attr('width', function (d) {
-    return xScale(d.population);
-  }).attr('height', yScale.bandwidth()).style('fill', 'steelblue').style('stroke', 'black').style('stroke-width', 0.7);
-};
-
-d3__WEBPACK_IMPORTED_MODULE_0__["csv"]("world.csv").then(function (data) {
-  data.forEach(function (c) {
-    c.population = +c.population * 100;
-  });
-  render(data);
-});
+var svg = d3__WEBPACK_IMPORTED_MODULE_0__["select"]("body").append("svg").attr("width", 1000).attr("height", 700).style("background-color", "steelblue");
 
 /***/ }),
 

@@ -4,6 +4,7 @@ import {scaleLinear,
         scaleBand, 
         axisLeft,
         axisBottom,
+        format
      } from "d3";
 
 const height = 4600;
@@ -31,7 +32,7 @@ const render = data => {
       .padding(0.3);
       
     const yAxis = axisLeft(yScale);
-    const xAxis = axisBottom(xScale);
+    const xAxis = axisBottom(xScale).tickFormat(format('.3s'));
         // length of all country
     const margin = { top: 30, right: 30, left: 150, bottom: 18}
 
@@ -56,11 +57,16 @@ const render = data => {
       .style('fill', 'steelblue')
       .style('stroke', 'black')
       .style('stroke-width', 0.7)
+    
+    g
+      .append('text')
+      .text('World Population Bar Chart')
+      .attr('class', 'title')
 };
 
 d3.csv("world.csv").then(data => {
   data.forEach(c => {
-    c.population = +c.population * 100;
+    c.population = +c.population;
   });
   render(data);
 });
