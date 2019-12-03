@@ -19,22 +19,22 @@ svg
 Promise.all([
   d3.tsv("world-country-names.tsv"),
   d3.json("world-110m.json"),
-  d3.csv("world.csv")
-]).then(data => console.log(data));
+  // d3.csv("world.csv")
+]).then(([tsvData, jsonData, csvData]) => {
+    // console.log(tsvData)
+});
 
 
-d3.json("world-110m.json") 
-    .then(data => {
-        const countries = topojson.feature(data, data.objects.countries)
+// d3.json("world-110m.json") 
+//     .then(data => {
+//         const countries = topojson.feature(data, data.objects.countries)
 
-        const path = svg.selectAll('path')
-            .data(countries.features)
-            .enter()
-            .append('path')
-            .attr('d', d => pathStartor(d))
-            .attr('class', 'land')
-
-        path
-            .append('title') 
-            .text('hello')
-    })
+//         const path = svg.selectAll('path')
+//             .data(countries.features)
+//             .enter()
+//             .append('path')
+//             .attr('class', 'country')
+//             .attr('d', pathStartor)
+//             .append('title')
+//             .text('hello')
+//     })
