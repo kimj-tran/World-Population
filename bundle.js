@@ -120,15 +120,24 @@ Promise.all([Object(d3__WEBPACK_IMPORTED_MODULE_0__["tsv"])("world-country-names
       jsonData = _ref2[1],
       csvData = _ref2[2];
 
-  console.log(jsonData);
+  // console.log(csvData);
   var countryName = {};
   tsvData.forEach(function (d) {
     countryName[d.id] = d.name;
   });
   var countries = topojson__WEBPACK_IMPORTED_MODULE_1__["feature"](jsonData, jsonData.objects.countries);
+  var population = {};
+  csvData.forEach(function (d) {
+    population[d.country] = d.population;
+  }); // console.log(population)
+
   svg.selectAll('path').data(countries.features).enter().append('path').attr('class', 'land').attr('d', function (d) {
     return pathStartor(d);
-  }).append('title').text('hello');
+  }).append('title').text(function (d) {
+    return countryName[d.id];
+  }).append('p').text(function (d) {
+    return population[countryName[d.id]];
+  });
 });
 
 /***/ }),
