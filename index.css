@@ -14,8 +14,7 @@ text {
 }
 
 .globe {
-  fill: rgb(94, 187, 218);
-  /* background: url('/sky.jpeg'); */
+  fill: rgb(51, 158, 194);
 }
 
 .land {
@@ -25,7 +24,7 @@ text {
   /* stroke-opacity: 0.1; */
 }
 .land:nth-child(2n) {
-  fill: rgb(6, 70, 95);
+  fill: rgb(124, 158, 172);
 }
 
 .land:nth-child(3n) {
@@ -41,7 +40,7 @@ text {
 }
 
 .land:nth-child(6n) {
-  fill: teal;
+  fill: rgb(165, 123, 175);
 }
 
 .land:nth-child(7n) {
@@ -53,7 +52,7 @@ text {
 }
 
 .land:nth-child(9n) {
-  fill: rgb(69, 97, 97);
+  fill: rgb(211, 134, 120);
 }
 
 .land:nth-child(10n) {
