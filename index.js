@@ -22,7 +22,7 @@ Promise.all([
   json("world-110m.json"),
   csv("world.csv")
 ]).then(([tsvData, jsonData, csvData]) => {
-
+  console.log(jsonData)
   const countryName = {};
   tsvData.forEach( d => {
     countryName[d.id] = d.name

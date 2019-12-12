@@ -1,7 +1,12 @@
 html {
-  background-color: lightgoldenrodyellow;
+  background-image: url('/space_back.jpg');
+  background-size: cover;
 }
 
+body {
+  padding-left: 23%;
+  padding-top: 10%;
+}
 text {
   font-size: 1.3em;
   color: black;
@@ -9,7 +14,8 @@ text {
 }
 
 .globe {
-  fill: lightblue;
+  fill: rgb(94, 187, 218);
+  /* background: url('/sky.jpeg'); */
 }
 
 .land {

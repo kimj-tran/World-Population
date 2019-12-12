@@ -120,6 +120,7 @@ Promise.all([Object(d3__WEBPACK_IMPORTED_MODULE_0__["tsv"])("world-country-names
       jsonData = _ref2[1],
       csvData = _ref2[2];
 
+  console.log(jsonData);
   var countryName = {};
   tsvData.forEach(function (d) {
     countryName[d.id] = d.name;
