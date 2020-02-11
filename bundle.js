@@ -109,18 +109,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var svg = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("body").append("svg").attr("width", 1200).attr("height", 900);
-var projection = Object(d3__WEBPACK_IMPORTED_MODULE_0__["geoOrthographic"])();
+var projection = Object(d3__WEBPACK_IMPORTED_MODULE_0__["geoOrthographic"])().rotate([0, 0]).translate([width / 2, height / 2]).clipAngle(90).scale(250);
 var pathStartor = Object(d3__WEBPACK_IMPORTED_MODULE_0__["geoPath"])().projection(projection);
-svg.append('path').attr('class', 'globe').attr('d', pathStartor({
+svg.append('path').attr('class', 'water').attr('d', pathStartor({
   type: 'Sphere'
 }));
+var countrySearch = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('body').append('div').attr('class', 'countrySearch');
+var countryList = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('body').append('select').attr('name', 'countries');
 Promise.all([Object(d3__WEBPACK_IMPORTED_MODULE_0__["tsv"])("world-country-names.tsv"), Object(d3__WEBPACK_IMPORTED_MODULE_0__["json"])("world-110m.json"), Object(d3__WEBPACK_IMPORTED_MODULE_0__["csv"])("world.csv")]).then(function (_ref) {
   var _ref2 = _slicedToArray(_ref, 3),
       tsvData = _ref2[0],
       jsonData = _ref2[1],
       csvData = _ref2[2];
 
-  // console.log(csvData);
   var countryName = {};
   tsvData.forEach(function (d) {
     countryName[d.id] = d.name;
@@ -129,15 +130,25 @@ Promise.all([Object(d3__WEBPACK_IMPORTED_MODULE_0__["tsv"])("world-country-names
   var population = {};
   csvData.forEach(function (d) {
     population[d.country] = d.population;
-  }); // console.log(population)
-
+  });
   svg.selectAll('path').data(countries.features).enter().append('path').attr('class', 'land').attr('d', function (d) {
     return pathStartor(d);
   }).append('title').text(function (d) {
     return countryName[d.id];
-  }).append('p').text(function (d) {
+  }).append('div').text(function (d) {
     return population[countryName[d.id]];
-  });
+  }).call(d3__WEBPACK_IMPORTED_MODULE_0__["drag"]().origin(function () {
+    var r = projection.rotate();
+    return {
+      x: r[0] / sens,
+      y: -r[1] / sens
+    };
+  }).on("drag", function () {
+    var rotate = projection.rotate();
+    projection.rotate([d3__WEBPACK_IMPORTED_MODULE_0__["event"].x * sens, -d3__WEBPACK_IMPORTED_MODULE_0__["event"].y * sens, rotate[2]]);
+    svg.selectAll("path.land").attr("d", path);
+    svg.selectAll(".focused").classed("focused", focused = false);
+  }));
 });
 
 /***/ }),
